@@ -44,13 +44,26 @@ public class EditTextWithClear extends AppCompatEditText {
 
                 //mengechek posisi dari komponen clearbutton
                 if (getCompoundDrawablesRelative()[2] != null) {
-                    float clearButtonStartPosition = (getWidth() - getPaddingEnd() - mClearButtonImage.getIntrinsicWidth());
+                    //ketika menggunakan bahasa arab
                     boolean isButtonClicked = false;
+                    if (getLayoutDirection() == LAYOUT_DIRECTION_LTR) {
+                        float clearButtonStartPosition = (getWidth() - getPaddingEnd() - mClearButtonImage.getIntrinsicWidth());
 
-                    //koordinat button yang dipencet
-                    if (motionEvent.getX() > clearButtonStartPosition) {
-                        isButtonClicked = true;
+
+                        //koordinat button yang dipencet
+                        if (motionEvent.getX() > clearButtonStartPosition) {
+                            isButtonClicked = true;
+                        }
+
+                    } else {
+                        float clearButtonEndPosition = mClearButtonImage.getIntrinsicWidth() + getPaddingStart();
+
+                        //koordinat button yang dipencet
+                        if (motionEvent.getX() < clearButtonEndPosition) {
+                            isButtonClicked = true;
+                        }
                     }
+
 
                     if (isButtonClicked) {
                         if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
